@@ -1,0 +1,24 @@
+{
+  "name": "star-wars-the-frontend-engineer",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc"
+  },
+  "main": "pages/index.tsx",
+  "dependencies": {
+    "@types/node": "12.11.7",
+    "@types/react": "16.9.11",
+    "@types/react-dom": "16.9.3",
+    "@zeit/next-css": "1.0.1",
+    "next": "9.1.1",
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "3.6.4"
+  },
+  "license": "ISC",
+  "keywords": [],
+  "description": "At SovTech our frontend teams are multidisciplinary, and we love React JS and TypeScript. It saves us time, works incredibly well, and opens up many many doors. We’ve put this test together to afford frontend engineers at any level out there, the freedom to prove their skills."
+}

@@ -1,25 +1,5 @@
-interface Film {
-  title: string;
-  episode_id: number;
-  opening_crawl: string;
-  director: string;
-  producer: Array<string>;
-  release_date: string;
-  characters: Array<string>;
-}
-
-interface Data {
-  count: number;
-  next: string;
-  previous: string;
-  results: Array<Film>;
-}
-
-type Params = {
-  params: {
-    episode_id: string;
-  };
-};
+import { useRouter } from "next/router";
+import { Data, Film, Params } from "../../lib/types";
 
 export const getStaticProps = async ({ params }: Params) => {
   const res = await fetch(`https://swapi.dev/api/films/${params?.episode_id}`);
@@ -45,9 +25,11 @@ export const getStaticPaths = async () => {
 };
 
 export default ({ film }: { film: Film }) => {
+  const { push } = useRouter();
   return (
     <div>
-      <h1>{film.title}</h1>
+      <button onClick={() => push("/")}>Back</button>
+      <h1>{film?.title}</h1>
       <p>Episode: {film.episode_id}</p>
     </div>
   );

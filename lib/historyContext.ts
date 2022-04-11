@@ -1,9 +1,5 @@
 import { createContext, useState, useCallback } from "react";
-
-export interface IHistContext {
-  searchHistory: Array<string>;
-  updateHistory: (search: string) => void;
-}
+import {IHistContext}from'./types'
 
 const HistContext = createContext<IHistContext>({
   searchHistory: [],

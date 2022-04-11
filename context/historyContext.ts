@@ -1,28 +1,12 @@
-import { createContext, Dispatch, SetStateAction, useContext } from "react";
+import { createContext } from "react";
 
 export interface IHistContext {
   searchHistory: Array<string>;
+  updateHistory: (search:string) => void
 }
 
-const HistContext = createContext<{
-  searchHistory: string[];
-  setHistory: Dispatch<SetStateAction<never[]>>;
-}>({
+const HistContext = createContext<IHistContext>({
   searchHistory: [],
-  setHistory: (): void => {
-    throw new Error("setHistory must be overwritten");
-  }
+  updateHistory: () => null
 });
 export default HistContext;
-
-export const HistProvider = HistContext.Provider;
-
-export function useHistContext() {
-  const context = useContext(HistContext);
-  if (context === null) {
-    throw Error(
-      "Search must be used inside of a HistContext, otherwise it will not function correctly."
-    );
-  }
-  return context;
-}

@@ -1,20 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import HistContext from "../context/historyContext";
 
 interface IFormValues {
   search: string;
 }
 
-export default function Search({
-  context
-}: {
-  searchHistory: string[];
-  setHistory: Dispatch<SetStateAction<never[]>>;
-}) {
+export default function Search() {
   const { register, handleSubmit } = useForm<IFormValues>();
+  const { searchHistory, updateHistory } = useContext(HistContext);
 
   const onSubmit: SubmitHandler<IFormValues> = ({ search }) => {
-    context.setHistory((prev: Array<string>) => [...prev, search]);
+    updateHistory(search);
   };
 
   return (
@@ -24,8 +21,8 @@ export default function Search({
         <button type="submit">Search</button>
       </form>
 
-      {context.searchHistory?.map((item) => (
-        <div>{item}</div>
+      {searchHistory?.map((item) => (
+        <div key={item}>{item}</div>
       ))}
     </div>
   );

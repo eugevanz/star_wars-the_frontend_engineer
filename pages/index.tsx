@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { GetServerSideProps } from "next";
-import HistContext, { IHistContext } from "../context/historyContext";
+import { useState, useCallback } from "react";
+import HistContext from "../context/historyContext";
 import Search from "../components/Search";
-import { useState } from "react";
 
 interface Data {
   count: number;
@@ -40,11 +40,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 function HistProvider() {
-  const [searchHistory, setHistory] = useState([]);
+  const [searchHistory, setHistory] = useState<string[]>([]);
+  const updateHistory = useCallback(
+    (search: string) => setHistory([...searchHistory, search]),
+    [setHistory, searchHistory]
+  );
 
   return (
-    <HistContext.Provider value={{ searchHistory, setHistory }}>
-      <Search context={{ searchHistory, setHistory }} />
+    <HistContext.Provider value={{ searchHistory, updateHistory }}>
+      <Search />
     </HistContext.Provider>
   );
 }

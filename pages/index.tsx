@@ -1,4 +1,5 @@
 import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import HistContext, { useHistContextValue } from "../context/historyContext";
 import Search from "../components/Search";
 
@@ -39,12 +40,18 @@ function HistProvider() {
 }
 
 export default ({ data }: { data: Data }) => {
+  const { push } = useRouter();
+
   return (
     <div>
       <HistProvider />
       <ul>
         {data.results.map((item) => (
-          <li key={item.episode_id}>{item.title}</li>
+          <li key={item.episode_id}>
+            <button onClick={() => push(`/films/${item.episode_id}`)}>
+              {item.title}
+            </button>
+          </li>
         ))}
       </ul>
     </div>

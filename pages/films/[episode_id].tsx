@@ -1,5 +1,3 @@
-import { useRouter } from "next/router";
-
 interface Film {
   title: string;
   episode_id: number;
@@ -19,12 +17,12 @@ interface Data {
 
 type Params = {
   params: {
-    id: number;
+    episode_id: string;
   };
 };
 
 export const getStaticProps = async ({ params }: Params) => {
-  const res = await fetch(`https://swapi.dev/api/films/${params?.id}`);
+  const res = await fetch(`https://swapi.dev/api/films/${params?.episode_id}`);
   const film: Film = await res.json();
 
   if (!film) return { notFound: true };
@@ -39,14 +37,18 @@ export const getStaticPaths = async () => {
   const data: Data = await res.json();
 
   return {
-    paths: data.results.map((film) => ({ params: { id: film.episode_id } })),
+    paths: data.results.map((film) => ({
+      params: { episode_id: `${film.episode_id}` }
+    })),
     fallback: true
   };
 };
 
-export default () => {
-  const router = useRouter();
-  const { id } = router.query;
-
-  return <p>Film: {id}</p>;
+export default ({ film }: { film: Film }) => {
+  return (
+    <div>
+      <h1>{film.title}</h1>
+      <p>Episode: {film.episode_id}</p>
+    </div>
+  );
 };

@@ -1,34 +1,23 @@
-import Link from "next/link";
-import { GetServerSideProps } from "next";
-import { useState, useCallback } from "react";
-import HistContext from "../context/historyContext";
+import { GetStaticProps } from "next";
+import HistContext, { useHistContextValue } from "../context/historyContext";
 import Search from "../components/Search";
 
-interface Data {
+export interface Data {
   count: number;
   next: string;
   previous: string;
-  results: {
-    name: string;
-    height: string;
-    mass: string;
-    hair_color: string;
-    skin_color: string;
-    eye_color: string;
-    birth_year: string;
-    gender: string;
-    homeworld: string;
-    films: string[];
-    species: string;
-    vehicles: string[];
-    starships: string[];
-    created: string;
-    edited: string;
-    url: string;
-  }[];
+  results: Array<{
+    title: string;
+    episode_id: number;
+    opening_crawl: string;
+    director: string;
+    producer: Array<string>;
+    release_date: string;
+    characters: Array<string>;
+  }>;
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch("https://swapi.dev/api/films");
   const data: Data = await res.json();
 
@@ -40,27 +29,24 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 function HistProvider() {
-  const [searchHistory, setHistory] = useState<string[]>([]);
-  const updateHistory = useCallback(
-    (search: string) => setHistory([...searchHistory, search]),
-    [setHistory, searchHistory]
-  );
+  const histContextValue = useHistContextValue();
 
   return (
-    <HistContext.Provider value={{ searchHistory, updateHistory }}>
+    <HistContext.Provider value={histContextValue}>
       <Search />
     </HistContext.Provider>
   );
 }
 
-export default ({ data }: { data: Data[] }) => {
+export default ({ data }: { data: Data }) => {
   return (
     <div>
       <HistProvider />
-      Hello World. {JSON.stringify(data)}
-      <Link href="/about">
-        <a href="/about">About</a>
-      </Link>
+      <ul>
+        {data.results.map((item) => (
+          <li key={item.episode_id}>{item.title}</li>
+        ))}
+      </ul>
     </div>
   );
 };

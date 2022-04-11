@@ -37,6 +37,7 @@ export default function Search() {
           })}
           onFocus={() => setOpen(true)}
         />
+        <button onClick={() => setOpen(false)}>cancel</button>
       </form>
 
       {isOpen && (

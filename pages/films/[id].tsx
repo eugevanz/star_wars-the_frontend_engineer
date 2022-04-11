@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { GetStaticProps, GetStaticPaths } from "next";
 
 interface Film {
   title: string;
@@ -24,7 +23,7 @@ type Params = {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }: Params) => {
+export const getStaticProps = async ({ params }: Params) => {
   const res = await fetch(`https://swapi.dev/api/films/${params?.id}`);
   const film: Film = await res.json();
 
@@ -35,7 +34,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: Params) => {
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
   const res = await fetch("https://swapi.dev/api/films");
   const data: Data = await res.json();
 

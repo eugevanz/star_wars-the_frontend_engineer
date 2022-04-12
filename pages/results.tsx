@@ -33,7 +33,7 @@ export default ({ data }: { data: Data }) => {
         ⌫
       </button>
       {data?.results.length ? (
-        data.results.map((item) => (
+        data?.results.map((item) => (
           <button
             key={item.episode_id}
             style={{

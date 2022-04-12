@@ -17,7 +17,7 @@ export const getStaticPaths = async () => {
   const data: Data = await res.json();
 
   return {
-    paths: data.results.map((film) => ({
+    paths: data?.results.map((film) => ({
       params: { episode_id: `${film.episode_id}` }
     })),
     fallback: true

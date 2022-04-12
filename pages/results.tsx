@@ -21,24 +21,55 @@ export default ({ data }: { data: Data }) => {
 
   return (
     <div>
-      <button onClick={() => push("/")}>back</button>
+      <button
+        style={{
+          padding: 12,
+          borderWidth: 0,
+          color: "#010d12",
+          fontSize: 36,
+          backgroundColor: "white"
+        }}
+        onClick={() => push("/")}>
+        ⌫
+      </button>
       {data?.results.length ? (
         data.results.map((item) => (
           <button
             key={item.episode_id}
-            style={{ padding: 12, borderRadius: 12, borderWidth: 0 }}
+            style={{
+              padding: 24,
+              paddingRight: 64,
+              borderRadius: 8,
+              borderWidth: 0,
+              textAlign: "left",
+              marginTop: 12,
+              backgroundColor: "#010d12"
+            }}
             onClick={() => push(`/films/${item.episode_id}`)}>
-            <span
+            <div style={{ color: "#4b7e94" }}>{item.release_date}</div>
+            <div
               style={{
                 fontWeight: "bold",
-                fontSize: 14
+                fontSize: 24,
+                color: "#F0F8FF"
               }}>
               {item.title}
-            </span>
+            </div>
+            <div style={{ paddingTop: 8, color: "#F0F8FF" }}>
+              {item.opening_crawl}
+            </div>
           </button>
         ))
       ) : (
-        <div>No results</div>
+        <div
+          style={{
+            fontWeight: "bold",
+            fontSize: 24,
+            color: "#010d12",
+            padding: 24
+          }}>
+          No results
+        </div>
       )}
     </div>
   );

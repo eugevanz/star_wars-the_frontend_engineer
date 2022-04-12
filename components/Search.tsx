@@ -62,12 +62,26 @@ export default function Search() {
       {isOpen && (
         <>
           <button
-            style={{ borderWidth: 0, borderRadius: 24 }}
+            style={{
+              borderWidth: 0,
+              borderRadius: 24,
+              padding: 8,
+              color: "#010d12"
+            }}
             onClick={handleSubmit(onSubmit)}>
             {current}
           </button>
           {searchHistory?.map((item) => (
-            <button onClick={() => onRecall(item)} key={item}>
+            <button
+              style={{
+                borderWidth: 0,
+                borderRadius: 24,
+                padding: 8,
+                color: "white",
+                backgroundColor: "#010d12"
+              }}
+              onClick={() => onRecall(item)}
+              key={item}>
               {item}
             </button>
           ))}

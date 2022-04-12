@@ -22,20 +22,24 @@ export default ({ data }: { data: Data }) => {
   return (
     <div>
       <button onClick={() => push("/")}>back</button>
-      {data?.results.map((item) => (
-        <button
-          key={item.episode_id}
-          style={{ padding: 12, borderRadius: 12, borderWidth: 0 }}
-          onClick={() => push(`/films/${item.episode_id}`)}>
-          <span
-            style={{
-              fontWeight: "bold",
-              fontSize: 14
-            }}>
-            {item.title}
-          </span>
-        </button>
-      ))}
+      {data?.results.length ? (
+        data.results.map((item) => (
+          <button
+            key={item.episode_id}
+            style={{ padding: 12, borderRadius: 12, borderWidth: 0 }}
+            onClick={() => push(`/films/${item.episode_id}`)}>
+            <span
+              style={{
+                fontWeight: "bold",
+                fontSize: 14
+              }}>
+              {item.title}
+            </span>
+          </button>
+        ))
+      ) : (
+        <div>No results</div>
+      )}
     </div>
   );
 };

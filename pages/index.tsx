@@ -18,22 +18,35 @@ export default ({ data }: { data: Data }) => {
   const { push } = useRouter();
 
   return (
-    <>
+    <div>
       <Search />
       {data?.results.map((item) => (
         <button
           key={item.episode_id}
-          style={{ padding: 12, borderRadius: 12, borderWidth: 0 }}
+          style={{
+            padding: 24,
+            paddingRight: 64,
+            borderRadius: 8,
+            borderWidth: 0,
+            textAlign: "left",
+            marginTop: 12,
+            backgroundColor: "#010d12"
+          }}
           onClick={() => push(`/films/${item.episode_id}`)}>
-          <span
+          <div style={{ color: "#4b7e94" }}>{item.release_date}</div>
+          <div
             style={{
               fontWeight: "bold",
-              fontSize: 14
+              fontSize: 24,
+              color: "#F0F8FF"
             }}>
             {item.title}
-          </span>
+          </div>
+          <div style={{ paddingTop: 8, color: "#F0F8FF" }}>
+            {item.opening_crawl}
+          </div>
         </button>
       ))}
-    </>
+    </div>
   );
 };

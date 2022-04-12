@@ -15,30 +15,61 @@ export default function Search() {
   const [current, setCurrent] = useState("");
 
   const onSubmit: SubmitHandler<IFormValues> = ({ search }) => {
-    updateHistory(search);
+    if (search.length) {
+      updateHistory(search);
+      setOpen(false);
+      push(`/results?search=${search}`);
+    }
+  };
+
+  const onRecall = (item: string) => {
     setOpen(false);
-    push(`/results?search=${search}`);
+    push(`/results?search=${item}`);
   };
 
   return (
-    <div className="search-container">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="Search.."
-          {...register("search", {
-            onChange: (e) => setCurrent(e.target.value)
-          })}
-          onFocus={() => setOpen(true)}
-        />
-        <button onClick={() => setOpen(false)}>cancel</button>
-      </form>
-
+    <div>
+      <div style={{ display: "flex", padding: 12 }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            style={{
+              padding: 12,
+              borderWidth: 0,
+              color: "#010d12",
+              fontSize: 14
+            }}
+            type="text"
+            placeholder="Search.."
+            {...register("search", {
+              onChange: (e) => setCurrent(e.target.value)
+            })}
+            onFocus={() => setOpen(true)}
+          />
+        </form>
+        {isOpen && (
+          <button
+            style={{
+              fontSize: 24,
+              borderWidth: 0,
+              backgroundColor: "white",
+              color: "#010d12"
+            }}
+            onClick={() => setOpen(false)}>
+            x
+          </button>
+        )}
+      </div>
       {isOpen && (
         <>
-          <button onClick={handleSubmit(onSubmit)}>{current}</button>
+          <button
+            style={{ borderWidth: 0, borderRadius: 24 }}
+            onClick={handleSubmit(onSubmit)}>
+            {current}
+          </button>
           {searchHistory?.map((item) => (
-            <button key={item}>{item}</button>
+            <button onClick={() => onRecall(item)} key={item}>
+              {item}
+            </button>
           ))}
         </>
       )}

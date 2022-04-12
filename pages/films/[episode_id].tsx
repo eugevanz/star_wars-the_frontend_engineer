@@ -30,7 +30,7 @@ export default ({ film }: { film: Film }) => {
     <div>
       <button onClick={() => push("/")}>Back</button>
       <h1>{film?.title}</h1>
-      <p>Episode: {film.episode_id}</p>
+      <p>Episode: {film?.episode_id}</p>
     </div>
   );
 };

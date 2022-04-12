@@ -1,10 +1,12 @@
-import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { Data } from "../lib/types";
-import Search from "../components/Search";
 
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch("https://swapi.dev/api/films");
+export const getServerSideProps = async ({
+  query: { search }
+}: {
+  query: { search: string };
+}) => {
+  const res = await fetch(`https://swapi.dev/api/films/?search=${search}`);
   const data: Data = await res.json();
 
   if (!data) return { notFound: true };
@@ -18,8 +20,8 @@ export default ({ data }: { data: Data }) => {
   const { push } = useRouter();
 
   return (
-    <>
-      <Search />
+    <div>
+      <button onClick={() => push("/")}>back</button>
       {data?.results.map((item) => (
         <button
           key={item.episode_id}
@@ -34,6 +36,6 @@ export default ({ data }: { data: Data }) => {
           </span>
         </button>
       ))}
-    </>
+    </div>
   );
 };

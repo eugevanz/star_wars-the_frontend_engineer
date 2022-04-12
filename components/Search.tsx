@@ -1,29 +1,23 @@
+import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import HistContext from "../lib/historyContext";
-import { IFormValues, Data } from "../lib/types";
-
-export const getStaticProps = async () => {
-  const res = await fetch("https://swapi.dev/api/films");
-  const data: Data = await res.json();
-
-  if (!data) return { notFound: true };
-
-  return {
-    props: { data }
-  };
-};
+import { IFormValues } from "../lib/types";
 
 export default function Search() {
+  const { push } = useRouter();
+
   const { register, handleSubmit } = useForm<IFormValues>();
+
   const { searchHistory, updateHistory } = useContext(HistContext);
+
   const [isOpen, setOpen] = useState(false);
   const [current, setCurrent] = useState("");
 
   const onSubmit: SubmitHandler<IFormValues> = ({ search }) => {
-    if (!searchHistory.includes(search)) updateHistory(search);
-
+    updateHistory(search);
     setOpen(false);
+    push(`/results?search=${search}`);
   };
 
   return (

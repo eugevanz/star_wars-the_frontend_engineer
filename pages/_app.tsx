@@ -1,22 +1,12 @@
 import type { AppProps } from "next/app";
 import HistContext, { useHistContextValue } from "../lib/historyContext";
-import Search from "../components/Search";
 
-function HistProvider() {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const histContextValue = useHistContextValue();
 
   return (
     <HistContext.Provider value={histContextValue}>
-      <Search />
-    </HistContext.Provider>
-  );
-}
-
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <HistProvider />
       <Component {...pageProps} />
-    </>
+    </HistContext.Provider>
   );
 }
